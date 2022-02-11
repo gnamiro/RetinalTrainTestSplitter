@@ -26,14 +26,14 @@ if __name__ == '__main__':
   train_path = f"{args.output_path}/train/good"
   test_path = f'{args.output_path}/test'
 
-  # os.makedirs(train_path, exist_ok=True)
-  # os.makedirs(f"{test_path}/good", exist_ok=True)
-  # # os.makedirs(f"{test_path}/disease", exist_ok=True)
-  # # os.makedirs(f"{test_path}/ambiguous", exist_ok=True)
+  os.makedirs(train_path, exist_ok=True)
+  os.makedirs(f"{test_path}/good", exist_ok=True)
+  # os.makedirs(f"{test_path}/disease", exist_ok=True)
+  # os.makedirs(f"{test_path}/ambiguous", exist_ok=True)
 
 
-  # copy_tree(f'{args.images_path}/disease', test_path + '/disease')
-  # copy_tree(f'{args.images_path}/ambiguous', test_path + '/ambiguous')
+  copy_tree(f'{args.images_path}/disease', test_path + '/disease')
+  copy_tree(f'{args.images_path}/ambiguous', test_path + '/ambiguous')
 
   good_images = [name for name in os.listdir(good_fundus_images)]
   print(len(good_images))
@@ -50,8 +50,10 @@ if __name__ == '__main__':
   print(len(train_files))
 
   for index, _file in train_files.iterrows():
+    # print(index)
     shutil.copy2(f'{good_fundus_images}/{_file.healthy_fundus}', f'{train_path}')
 
-  for _file in test_files:
+  for index, _file in test_files.iterrows():
+    # print(index)
     shutil.copy2(f'{good_fundus_images}/{_file.healthy_fundus}', f'{test_path}/good')    
 
