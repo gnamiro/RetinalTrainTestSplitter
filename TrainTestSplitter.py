@@ -11,6 +11,7 @@ def get_args():
   parser = argparse.ArgumentParser(description='FundusPath')
   parser.add_argument('--images_path',
                       default='./Dataset')
+  parser.add_argument('--eye_dir', default='left')
   parser.add_argument('--output_path', default='./datasets/fundus')
   parser.add_argument('--random_state', default=29)
   parser.add_argument('--test_size', default=0.08)
@@ -32,7 +33,7 @@ def copy_good_samples(good_images):
     # print(index)
     num += 1
     shutil.copy2(f'{good_fundus_images}/{_file.healthy_fundus}', f'{train_path}')
-    if(num > 230):
+    if(num > 510):
       break
 
   num = 0
@@ -57,8 +58,17 @@ def copy_disease_samples(disease_images):
     if(num > 100):
       break
 
+def getEyes(path, direction):
+  _list = []
+  for name in os.listdir(path):
+    if(name.find(direction) != -1):
+      _list.append(name)
+    
+  return _list
+
 if __name__ == '__main__':
   args = get_args()
+  eye_dir = '_1.jpg' if args.eye_dir =='left' else '_2.jpg'
 
   np.random.seed(args.random_state)
   good_fundus_images = './Dataset/good'
@@ -77,11 +87,14 @@ if __name__ == '__main__':
   # copy_tree(f'{args.images_path}/disease', test_path + '/disease')
   # copy_tree(f'{args.images_path}/ambiguous', test_path + '/ambiguous')
 
-  good_images = [name for name in os.listdir(good_fundus_images)]
+  # good_images = [name for name in os.listdir(good_fundus_images)]
+  good_images = getEyes(good_fundus_images, eye_dir)
   print(len(good_images))
   copy_good_samples(good_images)
 
-  disease_images = [name for name in os.listdir(disease_fundus_images)]
+  # disease_images = [name for name in os.listdir(disease_fundus_images)]
+  disease_images = getEyes(disease_fundus_images, eye_dir)
   print(len(disease_images))
   copy_disease_samples(disease_images)
+
 
