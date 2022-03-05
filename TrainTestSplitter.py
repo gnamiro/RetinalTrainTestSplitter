@@ -33,7 +33,7 @@ def copy_good_samples(good_images):
     # print(index)
     num += 1
     shutil.copy2(f'{good_fundus_images}/{_file.healthy_fundus}', f'{train_path}')
-    if(num > 510):
+    if(num > 1500):
       break
 
   num = 0
@@ -41,7 +41,7 @@ def copy_good_samples(good_images):
     # print(index)
     num += 1
     shutil.copy2(f'{good_fundus_images}/{_file.healthy_fundus}', f'{test_path}/good')  
-    if(num > 30):
+    if(num > 100):
       break
 
 def copy_disease_samples(disease_images):
@@ -55,7 +55,7 @@ def copy_disease_samples(disease_images):
     # print(index)
     num += 1
     shutil.copy2(f'{disease_fundus_images}/{_file.unhealthy_fundus}', f'{test_path}/disease')
-    if(num > 100):
+    if(num > 900):
       break
 
 def getEyes(path, direction):
